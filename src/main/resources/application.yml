@@ -1,0 +1,75 @@
+server:
+  servlet:
+    session:
+      cookie:
+        max-age: 86400
+        http-only: true
+  #error:
+  #  path: /err
+  port: 8086
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+#    servlet:
+#      path: /stadmin/
+    contentnegotiation:
+      favor-parameter: true #ContentNegotiationViewResolver가 format 파라미터로 지정한 미디어 타입을 사용하도록 설정
+      media-types:
+        xls: application/vnd.ms-excel
+        file: application/octet-stream
+  jmx:
+    enabled: false
+  main:
+    allow-bean-definition-overriding: true
+#  jpa:
+#    properties:
+#      hibernate:
+#        show_sql: true #querydsl or jpa or anything. show query
+#        format_sql: true #beautiful query
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 2500MB
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:log4jdbc:sqlserver://192.168.0.201:1434;DatabaseName=hyundai_dj
+    username: sa
+    password: sellic77&&
+logging:
+  pattern:
+    console: "[%d{yyyy-MM-dd HH:mm:ss}:%-3relative][%thread] %-5level %M %logger{35} - %msg%n"
+  level:
+    org.springframework.web: debug
+    java.sql: error
+    jdbc: off
+    jdbc.sqlonly: off
+    jdbc.sqltiming: debug
+    jdbc.audit: off
+    jdbc.resultset: off
+    jdbc.resultsettable: debug
+    jdbc.connection: off
+---
+spring:
+  profiles:
+  - dev
+  h2:
+    console:
+      enabled: true
+  jpa: # 아무런 db 설정이 없으면 이렇게 디폴트로 완성된다
+    properties:
+      hibernate:
+        show_sql: true #querydsl or jpa or anything. show query
+        format_sql: true #beautiful query
+    database: H2
+    hibernate:
+      ddl-auto: create
+  datasource:
+      url: jdbc:h2:mem:testdb
+      username: sa
+      password: 
+      driverClassName: org.h2.Driver
+      
